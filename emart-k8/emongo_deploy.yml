@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emart-mongo
+spec:
+  selector:
+    matchLabels:
+      app: emongo
+  template:
+    metadata:
+      labels:
+        app: emongo
+    spec:
+      containers:
+      - name: emongo
+        image: mongo:4
+      env:
+       - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            confiMapKeyRef:
+              name: emongo
+              key: MONGO_INITDB_DATABASE
+      ports:
+        - containerPort: 27017

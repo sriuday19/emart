@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emart-client
+spec:
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: sriuday19/client"
+        ports:
+        - containerPort: 4200
+      initContainers:
+        - name: clinet-api
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup api-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+        - name: client-webapi
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup webapi-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]

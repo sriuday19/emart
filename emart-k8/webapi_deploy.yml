@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emart-webapi
+spec:
+  selector:
+    matchLabels:
+      app: webapi
+  template:
+    metadata:
+      labels:
+        app: webapi
+    spec:
+      containers:
+      - name: webapi
+        image: sriuday19/webapi
+        ports:
+        - containerPort: 9000
+      initContainers:
+      - name: init-emartdb
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup emartdb-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
