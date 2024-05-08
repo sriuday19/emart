@@ -16,10 +16,10 @@ spec:
         image: sriuday19/client"
         ports:
         - containerPort: 4200
-      initContainers:
-        - name: clinet-api
-          image: busybox:1.28
-          command: ['sh', '-c', "until nslookup api-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
-        - name: client-webapi
-          image: busybox:1.28
-          command: ['sh', '-c', "until nslookup webapi-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+      # initContainers:
+      #   - name: clinet-api
+      #     image: busybox:1.28
+      #     command: ['sh', '-c', "until nslookup api-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+      #   - name: client-webapi
+      #     image: busybox:1.28
+      #     command: ['sh', '-c', "until nslookup webapi-service.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
